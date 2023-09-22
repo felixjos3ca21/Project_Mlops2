@@ -20,6 +20,18 @@ def index():
 #-----------------------------------------------------------------------------------------------------------------
 @app.get("/userdata/")
 async def userdata(user_id: str):
+     """
+    Obtiene información de un usuario a partir de su ID.
+    Args:
+        user_id (str): El ID del usuario que se desea consultar.
+    Returns:
+        dict: Un diccionario con la información del usuario, que incluye:
+            - "Cantidad de Dinero Gastado": La cantidad de dinero gastado por el usuario.
+            - "Porcentaje de Recomendación": El porcentaje de recomendación del usuario.
+            - "Cantidad de Items": La cantidad de items asociados al usuario.
+
+        Si el usuario no se encuentra, devuelve un diccionario con un mensaje de error.
+    """
     point_one = pd.read_csv('point_one.csv')
     point_one['user_id'] = point_one['user_id'].astype(str)
     user_id = str(user_id)
@@ -47,6 +59,17 @@ async def userdata(user_id: str):
 
 @app.get("/countreviews/")
 async def countreviews(fecha_inicio: str, fecha_fin: str):
+     """
+    Obtiene estadísticas sobre las reseñas dentro de un rango de fechas dado.
+    Args:
+        fecha_inicio (str): Fecha de inicio del rango en formato YYYY-MM-DD.
+        fecha_fin (str): Fecha de fin del rango en formato YYYY-MM-DD.
+
+    Returns:
+        dict: Un diccionario con estadísticas que incluyen:
+            - 'Cantidad de usuarios con Reviews': La cantidad de usuarios que dejaron reseñas en el rango de fechas.
+            - 'Porcentaje de Recomendación': El porcentaje promedio de recomendación en el rango de fechas.
+    """
     point_second = pd.read_csv('point_second.csv')
     # Convierte las fechas de entrada a objetos datetime
     fecha_inicio = pd.to_datetime(fecha_inicio)
@@ -76,6 +99,14 @@ async def countreviews(fecha_inicio: str, fecha_fin: str):
 
 @app.get("/genre/")
 async def genre(genero: str):
+      """
+    Busca un género específico en un ranking y devuelve su posición.
+    Args:
+        genero (str): El género que se desea buscar (insensible a mayúsculas y minúsculas).
+    Returns:
+        dict: Un diccionario con la respuesta que incluye:
+            - 'respuesta' (str): Un mensaje que indica la posición del género en el ranking o si no se encuentra.
+    """
     point_thirth = pd.read_csv('point_thirth.csv')
     # Convierte el género consultado a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
     genero = genero.lower()
@@ -93,6 +124,15 @@ async def genre(genero: str):
 
 @app.get("/userforgenre/")
 async def userforgenre(genero: str):
+    """
+    Busca los 5 usuarios principales que han jugado más tiempo en un género específico.
+    Args:
+        genero (str): El género que se desea buscar (insensible a mayúsculas y minúsculas).
+    Returns:
+        dict: Un diccionario con la respuesta que incluye:
+            - 'Para el género [nombre del género]': Una lista de los 5 usuarios principales en ese género,
+              cada uno con su ID de usuario y URL de perfil.
+    """
     point_fourth = pd.read_csv('point_fourth.csv')
     # Convierte el género consultado a minúsculas
     genero = genero.lower()
@@ -126,6 +166,17 @@ async def userforgenre(genero: str):
 
 @app.get("/developer/")
 async def developer(developer: str):
+    """
+    Obtiene información sobre un desarrollador de videojuegos específico.
+    Args:
+        developer (str): El nombre del desarrollador que se desea buscar (insensible a mayúsculas y minúsculas).
+    Returns:
+        dict: Un diccionario con la respuesta que incluye:
+            - 'Publisher': El nombre del editor asociado al desarrollador.
+            - 'Cantidad de Items': La cantidad de juegos desarrollados por el desarrollador.
+            - 'Porcentaje de Free por Año': Un diccionario que muestra el porcentaje de juegos gratuitos
+              por año de lanzamiento.
+    """
     point_fiveth = pd.read_csv('point_fiveth.csv')
     developer = developer.lower()
     
@@ -161,7 +212,14 @@ async def developer(developer: str):
 
 @app.get("/sentiment_analysis/")
 async def sentiment_analysis(year: int):
-    
+    """
+    Realiza un análisis de sentimiento de las reseñas de un año específico.
+    Args:
+        year (int): El año para el cual se desea realizar el análisis de sentimiento.
+    Returns:
+        dict: Un diccionario con la respuesta que incluye el conteo de reseñas clasificadas
+        como 'Negativos', 'Neutrales' y 'Positivos' para el año dado.
+    """
     point_sixth = pd.read_csv('point_sixth.csv')
     # Aquí debes agregar tu código para cargar y procesar el DataFrame point_sixth
 
@@ -183,6 +241,16 @@ async def sentiment_analysis(year: int):
 
 @app.get('/recomendacion_juego/{id}')
 def recomendacion_juego(id: str):
+    """
+    Obtiene recomendaciones de 5 juegos similares a partir de un ID de juego dado.
+    Args:
+        id (str): El ID del juego para el cual se desean obtener recomendaciones.
+    Returns:
+        dict: Un diccionario que contiene una lista de juegos recomendados similares.
+    Raises:
+        HTTPException(404): Si el ID de juego no se encuentra en los datos.
+        HTTPException(500): Si se produce un error interno del servidor.
+    """
     try:
         '''Ingresa un ID de juego y obtén recomendaciones similares en una lista'''
         data_ml = pd.read_csv('data_ML.csv')
