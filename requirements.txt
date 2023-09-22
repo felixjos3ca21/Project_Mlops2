@@ -1,0 +1,8 @@
+fastapi
+pandas
+nltk
+regex
+scikit-learn
+scipy
+threadpoolctl
+uvicorn
