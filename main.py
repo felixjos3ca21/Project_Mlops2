@@ -21,6 +21,8 @@ def index():
 @app.get("/userdata/")
 async def userdata(user_id: str):
     point_one = pd.read_csv('point_one.csv')
+    point_one['user_id'] = point_one['user_id'].astype(str)
+    user_id = str(user_id)
     # Filtrar el DataFrame por el user_id proporcionado
     usuario = point_one[point_one['user_id'] == user_id]
 
