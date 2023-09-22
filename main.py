@@ -7,6 +7,7 @@ from fastapi import HTTPException
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
+import ast
 
 
 app = FastAPI()
