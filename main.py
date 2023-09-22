@@ -20,7 +20,7 @@ def index():
 #-----------------------------------------------------------------------------------------------------------------
 @app.get("/userdata/")
 async def userdata(user_id: str):
-     """
+    """
     Obtiene información de un usuario a partir de su ID.
     Args:
         user_id (str): El ID del usuario que se desea consultar.
@@ -59,7 +59,7 @@ async def userdata(user_id: str):
 
 @app.get("/countreviews/")
 async def countreviews(fecha_inicio: str, fecha_fin: str):
-     """
+    """
     Obtiene estadísticas sobre las reseñas dentro de un rango de fechas dado.
     Args:
         fecha_inicio (str): Fecha de inicio del rango en formato YYYY-MM-DD.
@@ -99,7 +99,7 @@ async def countreviews(fecha_inicio: str, fecha_fin: str):
 
 @app.get("/genre/")
 async def genre(genero: str):
-      """
+    """
     Busca un género específico en un ranking y devuelve su posición.
     Args:
         genero (str): El género que se desea buscar (insensible a mayúsculas y minúsculas).
